@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Othello</string>
+    <string name="miturno">Tu Turno</string>
+    <string name="turnoadv">Turno del adversario...</string>
+    <string name="new_round">Nueva Partida</string>
+    <string name="game_over">Fin de la partida</string>
+    <string name="game_over_message">¿Desea empezar una nueva partida?</string>
+    <string name="invalid_movement">Movimiento invalido</string>
+    <string name="pass_movement">Ha pasado</string>
+    <string name="help">Instrucciones</string>
+</resources>
