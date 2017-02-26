@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,11 +25,13 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundHolder>
         private TextView idTextView;
         private TextView boardTextView;
         private TextView dateTextView;
+        private RelativeLayout relativeLayout;
         private Round round;
 
         public RoundHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rel_lay_round_list);
             idTextView = (TextView) itemView.findViewById(R.id.list_item_id);
             boardTextView = (TextView) itemView.findViewById(R.id.list_item_board);
             dateTextView = (TextView) itemView.findViewById(R.id.list_item_date);
@@ -38,6 +41,19 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundHolder>
             idTextView.setText(round.getTitle());
             boardTextView.setText(round.getBoard().toString());
             dateTextView.setText(String.valueOf(round.getDate()).substring(0,19));
+            switch (round.getSize()){
+                case 4:
+                    relativeLayout.setBackgroundResource(R.color.Green);
+                    break;
+                case 6:
+                    relativeLayout.setBackgroundResource(R.color.Green6);
+                    break;
+                case 8:
+                    relativeLayout.setBackgroundResource(R.color.Green8);
+                    break;
+                default:
+                    break;
+            }
         }
 
         @Override
@@ -47,8 +63,6 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundHolder>
             context.startActivity(intent);
         }
     }
-
-    /*TODO generar la interfaz con Java.*/
 
     public RoundAdapter(ArrayList<Round> rounds){
         this.rounds = rounds;

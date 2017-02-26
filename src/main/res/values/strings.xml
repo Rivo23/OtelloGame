@@ -8,4 +8,5 @@
     <string name="invalid_movement">Movimiento invalido</string>
     <string name="pass_movement">Ha pasado</string>
     <string name="help">Instrucciones</string>
+    <string name="title_select">Tamaño del tablero</string>
 </resources>

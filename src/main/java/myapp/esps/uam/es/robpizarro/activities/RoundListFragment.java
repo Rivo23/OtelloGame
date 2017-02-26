@@ -72,6 +72,8 @@ public class RoundListFragment extends Fragment {
         roundRecyclerView.setLayoutManager(linearLayoutManager);
         roundRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        setHasOptionsMenu(true);
+
         updateUI();
 
         return view;
@@ -95,8 +97,6 @@ public class RoundListFragment extends Fragment {
         }
     }
 
-
-    /*TODO crear vistas de los siguientes menus*/
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu, menu);
@@ -105,9 +105,11 @@ public class RoundListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_new_round:
-                Round round = new Round(RoundRepository.SIZE);
+                SelectFragment selectFragment = new SelectFragment();
+                ((RoundListActivity)getActivity()).changeFragment(selectFragment);
+                /*Round round = new Round(RoundRepository.SIZE);
                 RoundRepository.get(getActivity()).addRound(round);
-                updateUI();
+                updateUI();*/
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

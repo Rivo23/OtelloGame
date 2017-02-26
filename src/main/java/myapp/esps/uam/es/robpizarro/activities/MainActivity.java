@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuInflater;
+import android.view.View;
 
 import myapp.esps.uam.es.robpizarro.R;
 import myapp.esps.uam.es.robpizarro.models.Round;
@@ -18,7 +21,6 @@ import myapp.esps.uam.es.robpizarro.models.Round;
 public class MainActivity extends AppCompatActivity  implements RoundFragment.Callbacks {
 
     private static final String EXTRA_ROUND_ID = "myapp.esps.uam.es.robpizarro.round_id"; //Identificador de la partida.
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,14 +39,24 @@ public class MainActivity extends AppCompatActivity  implements RoundFragment.Ca
         }
     }
 
-    public static Intent newIntent(Context packageContext, String roundId) {
+    public static Intent newIntent(Context packageContext, String sel_o_roindId) {
         Intent intent = new Intent(packageContext, MainActivity.class);
-        intent.putExtra(EXTRA_ROUND_ID, roundId);
+        intent.putExtra(EXTRA_ROUND_ID, sel_o_roindId);
         return intent;
     }
 
     @Override
     public void onRoundUpdated(Round round) {
 
+    }
+
+    /**
+     *
+     * @param frg
+     */
+    public void changeFragment(Fragment frg){
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, frg)
+                .commit();
     }
 }

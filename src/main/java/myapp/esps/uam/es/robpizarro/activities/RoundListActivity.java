@@ -23,6 +23,17 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
                     .commit();
         }
     }
+
+    /**
+     *
+     * @param frg
+     */
+    public void changeFragment(Fragment frg){
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, frg)
+                .commit();
+    }
+
     @Override
     public void onRoundSelected(Round round) {
         if (findViewById(R.id.detail_fragment_container) == null) {
@@ -39,8 +50,7 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
     @Override
     public void onRoundUpdated(Round round) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        RoundListFragment roundListFragment = (RoundListFragment)
-                fragmentManager.findFragmentById(R.id.fragment_container);
+        RoundListFragment roundListFragment = (RoundListFragment)fragmentManager.findFragmentById(R.id.fragment_container);
         roundListFragment.updateUI();
     }
 

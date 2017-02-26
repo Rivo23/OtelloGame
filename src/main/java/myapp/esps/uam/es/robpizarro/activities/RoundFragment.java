@@ -35,7 +35,7 @@ import myapp.esps.uam.es.robpizarro.models.RoundRepository;
 import myapp.esps.uam.es.robpizarro.models.TableroOthello;
 
 public class RoundFragment extends Fragment implements PartidaListener, View.OnClickListener {
-    public static final String ARG_ROUND_ID = "myapp.esps.uam.es.robpizarro.round_id"; //Identificador de la partida
+    public static final String ARG_ROUND_ID = "round_id"; //Identificador de la partida
     private final int REL_WRAP = RelativeLayout.LayoutParams.WRAP_CONTENT;
     private final int REL_MATCH = RelativeLayout.LayoutParams.MATCH_PARENT;
     private int size;
@@ -65,7 +65,6 @@ public class RoundFragment extends Fragment implements PartidaListener, View.OnC
             size = round.getSize();
             ids = new int[size][size];
             int count=1;
-
             for(int i=0;i<size;i++){
                 for(int j=0;j<size;j++){
                     ids[i][j]=count;
