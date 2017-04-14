@@ -53,20 +53,26 @@ public class TableroOthello extends Tablero {
 		int j = ((MovimientoOthello) m).getY1();
 		
 		if(i==MovimientoOthello.PASAR && j==MovimientoOthello.PASAR){
-			this.cambiaTurno();
-			this.ultimoMovimiento=m;
-			if(movimientosValidos().get(0).equals(new MovimientoOthello(MovimientoOthello.PASAR, MovimientoOthello.PASAR))){
+			if(this.ultimoMovimiento.equals(m)){
 				countFichas();
+				return;
+			}else{
+				this.cambiaTurno();
+				this.ultimoMovimiento=m;
 			}
 			return;
 		}	
 		if(((MovimientoOthello) m).isValidated()!=null){
 			realizaMovimiento(m, ((MovimientoOthello) m).isValidated());
 		}else{
-			ArrayList<Integer[]> fuentes = getFuentes(i, j);
-			if(fuentes.size()!=0){
-				realizaMovimiento(m, fuentes);
-			}else{
+			if(tablero[i][j]==libre) {
+				ArrayList<Integer[]> fuentes = getFuentes(i, j);
+				if (fuentes.size() != 0) {
+					realizaMovimiento(m, fuentes);
+				}else {
+					throw new ExcepcionJuego("Movimiento no válido.");
+				}
+			}else {
 				throw new ExcepcionJuego("Movimiento no válido.");
 			}
 		}
@@ -162,14 +168,14 @@ public class TableroOthello extends Tablero {
 		estado+=(fichasRojas+"R");
 		estado+=(fichasNegras+"N");
 		estado+=(this.getTurno()+"T");
-		estado+=(this.libres+" ");
+		estado+=String.valueOf(this.libres);
 		return estado;
 	}
 
 	@Override
 	public void stringToTablero(String cadena) throws ExcepcionJuego {
 		try{
-			String[] piqueo = cadena.split(" RNT");
+			String[] piqueo = cadena.split("[ RNT]");
 			size = Integer.parseInt(piqueo[0]);
 			int count=1;
 			tablero = new int[size][size];

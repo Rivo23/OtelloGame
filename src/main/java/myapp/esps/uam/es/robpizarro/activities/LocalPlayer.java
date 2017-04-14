@@ -1,6 +1,5 @@
 package myapp.esps.uam.es.robpizarro.activities;
 
-import android.icu.text.MessagePattern;
 import android.view.View;
 
 import es.uam.eps.multij.Evento;
@@ -28,7 +27,7 @@ public class LocalPlayer implements Jugador, View.OnClickListener{
 
     @Override
     public String getNombre() {
-        return "Jugador Local";
+        return "Jugador Humano";
     }
 
     @Override
@@ -38,11 +37,9 @@ public class LocalPlayer implements Jugador, View.OnClickListener{
 
     @Override
     public void onCambioEnPartida(Evento evento) {
-
     }
 
     @Override
     public void onClick(View view) {
-
     }
 }

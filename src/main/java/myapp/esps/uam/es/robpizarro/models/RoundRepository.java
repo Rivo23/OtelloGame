@@ -3,40 +3,32 @@ package myapp.esps.uam.es.robpizarro.models;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by e268930 on 21/02/17.
  */
 
-public class RoundRepository {
-    public static final int SIZE = 4;
-    private static RoundRepository repository;
-    private ArrayList<Round> rounds;
-
-    public static RoundRepository get(Context context) {
-        if (repository == null) {
-            repository = new RoundRepository(context);
-        }
-        return repository;
+public interface RoundRepository {
+    void open() throws Exception;
+    void close();
+    interface LoginRegisterCallback {
+        void onLogin(String playerUuid);
+        void onError(String error);
+    }
+    void login(String playername, String password, LoginRegisterCallback callback);
+    void register(String playername, String password, LoginRegisterCallback callback);
+    interface BooleanCallback {
+        void onResponse(boolean ok);
+    }
+    void getRounds(String playeruuid, String orderByField, String group, RoundsCallback callback);
+    void addRound(Round round, BooleanCallback callback);
+    void updateRound(Round round, BooleanCallback callback);
+    interface RoundsCallback {
+        void onResponse(List<Round> rounds);
+        void onError(String error);
     }
 
-    public void addRound(Round round) { rounds.add(round); }
-
-    private RoundRepository(Context context) {
-        rounds = new ArrayList<Round>();
-        for (int i = 0; i < 5; i++) {
-            Round round = new Round(SIZE);
-            rounds.add(round);
-        }
-    }
-    public ArrayList<Round> getRounds() {
-        return rounds;
-    }
-    public Round getRound(String id) {
-        for (Round round : rounds) {
-            if (round.getId().equals(id))
-                return round;
-        }
-        return null;
-    }
+    void updateStats(String result[], String playeruuid, BooleanCallback callback);
+    String[] getStats(String playeruuid);
 }

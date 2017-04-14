@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="levelsArray">
+        <item>Android</item>
+        <item>Olive</item>
+        <item>Marine</item>
+        <item>Forest</item>
+        <item>Oasis</item>
+    </string-array>
+    <string-array name="levelsValues">
+        <item>@string/androidtheme</item>
+        <item>@string/olitheme</item>
+        <item>@string/marinetheme</item>
+        <item>@string/foresttheme</item>
+        <item>@string/oasistheme</item>
+    </string-array>
+</resources>

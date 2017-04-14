@@ -33,11 +33,11 @@ public class MovimientoOthello extends Movimiento {
 
 	@Override
 	public boolean equals(Object o) {
-		// TODO Auto-generated method stub
-		if(((MovimientoOthello) o).getY0()==this.y0 && ((MovimientoOthello) o).getY1()==this.y1){
-			return true;
+		if (!(o instanceof MovimientoOthello))
+			return false;
+		else{
+			return this.toString().equals(o.toString());
 		}
-		return false;
 	}
 	
 

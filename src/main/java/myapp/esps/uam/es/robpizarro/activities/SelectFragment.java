@@ -1,90 +1,105 @@
 package myapp.esps.uam.es.robpizarro.activities;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
-import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import es.uam.eps.multij.AccionMover;
-import es.uam.eps.multij.Evento;
-import es.uam.eps.multij.ExcepcionJuego;
-import es.uam.eps.multij.Jugador;
-import es.uam.eps.multij.JugadorAleatorio;
-import es.uam.eps.multij.Movimiento;
-import es.uam.eps.multij.Partida;
-import es.uam.eps.multij.PartidaListener;
-import es.uam.eps.multij.Tablero;
 import myapp.esps.uam.es.robpizarro.R;
-import myapp.esps.uam.es.robpizarro.models.MovimientoOthello;
 import myapp.esps.uam.es.robpizarro.models.Round;
 import myapp.esps.uam.es.robpizarro.models.RoundRepository;
-import myapp.esps.uam.es.robpizarro.models.TableroOthello;
+import myapp.esps.uam.es.robpizarro.models.RoundRepositoryFactory;
+import myapp.esps.uam.es.robpizarro.models.StyleManager;
 
 /**
  * Created by localuser01 on 24/02/17.
  */
 
-public class SelectFragment extends Fragment implements View.OnClickListener {
-    //private Callbacks callbacks;
+public class SelectFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private final int REL_WRAP = RelativeLayout.LayoutParams.WRAP_CONTENT;
     private final int REL_MATCH = RelativeLayout.LayoutParams.MATCH_PARENT;
+    private Callbacks callback;
+    private final int id_4button=3;
+    private boolean turnoHumano=false;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case 1:
+            case id_4button:
                 startNewSelectedRound(4);
                 break;
-            case 2:
+            case id_4button+1:
                 startNewSelectedRound(6);
                 break;
-            case 3:
+            case id_4button+2:
                 startNewSelectedRound(8);
+                break;
+            case id_4button+3:
+                callback.onCancelButton();
                 break;
             default:
                 break;
         }
     }
 
-    private void startNewSelectedRound(int size){
-        Round round = new Round(size);
-        RoundRepository.get(getActivity()).addRound(round);
-        if (getActivity() instanceof MainActivity) {
-            RoundFragment roundFragment = RoundFragment.newInstance(round.getId());
-            ((MainActivity)getActivity()).changeFragment(roundFragment);
-        }else{
-            Context context = getContext();
-            Intent intent = MainActivity.newIntent(context, round.getId());
-            context.startActivity(intent);
-        }
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        turnoHumano=compoundButton.isChecked();
+    }
 
+    public interface Callbacks {
+        void onNewRoundCreated(Round round);
+        void onCancelButton();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void startNewSelectedRound(int size){
+        Round round = new Round(size, turnoHumano);
+        RoundRepository repository = RoundRepositoryFactory.createRepository(getContext());
+        RoundRepository.BooleanCallback callbacks = new RoundRepository.BooleanCallback(){
+            @Override
+            public void onResponse(boolean ok){
+                if(!ok){
+                    Snackbar.make(getView(), R.string.error_new_game,
+                            Snackbar.LENGTH_LONG).show();
+                }
+            }
+        };
+        String playeruuid = PreferenceActivity.getUUIDPlayer(getActivity());
+        round.setPlayerUUID(playeruuid);
+        repository.addRound(round, callbacks);
+        repository.close();
+        callback.onNewRoundCreated(round);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        //callbacks = (SelectFragment.Callbacks) context;
+        callback = (SelectFragment.Callbacks) context;
     }
     @Override
     public void onDetach() {
         super.onDetach();
-        //callbacks = null;
+        callback = null;
     }
 
     @Override
@@ -104,27 +119,52 @@ public class SelectFragment extends Fragment implements View.OnClickListener {
         RelativeLayout.LayoutParams paramsMatch = new RelativeLayout.LayoutParams(REL_MATCH, REL_MATCH);
         RelativeLayout root = new RelativeLayout(getActivity());
         root.setGravity(Gravity.CENTER);
-        root.setBackgroundResource(R.color.Blue);
+        root.setBackgroundResource(StyleManager.getwindowBackColor(getContext()));
         root.setLayoutParams(paramsMatch);
-        createTitleTextView(root, 0);
 
-        createButtonBelow(root, 1, R.drawable.tab_4_48dp, 0);
-        createButtonBelow(root, 2, R.drawable.tab_6_48dp, 1);
-        createButtonBelow(root, 3, R.drawable.tab_8_48dp, 2);
 
-        return root;
+        createTitleTextView(root, 99*id_4button);
+        createCheckBox(root, id_4button-1, 99*id_4button);
+        createButtonBelow(root, id_4button, R.drawable.tab_4_48dp, id_4button-1);
+        createButtonBelow(root, id_4button+1, R.drawable.tab_6_48dp, id_4button);
+        createButtonBelow(root, id_4button+2, R.drawable.tab_8_48dp, id_4button+1);
+        createButtonwithShapeBelow(root, id_4button+3, id_4button+2);
+
+        ScrollView scrollView = new ScrollView(getContext());
+        scrollView.addView(root, new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
+        scrollView.setFillViewport(true);
+        return scrollView;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void createCheckBox(RelativeLayout parent, int id, int below){
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(REL_WRAP,
+                REL_WRAP);
+        params.addRule(RelativeLayout.BELOW, below);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        CheckBox checkBox = new CheckBox(getActivity());
+        checkBox.setId(id);
+        checkBox.setText(getString(R.string.checkbox));
+        checkBox.setPadding(5,5,5,5);
+        checkBox.setTextSize(24);
+        checkBox.setOnCheckedChangeListener(this);
+        checkBox.setLayoutParams(params);
+
+        parent.addView(checkBox);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void createTitleTextView(RelativeLayout parent, int id){
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(REL_WRAP,
                 REL_WRAP);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
         TextView textView = new TextView(getActivity());
         textView.setText(R.string.title_select);
+        textView.setBackgroundResource(StyleManager.getwindowBackColor(getContext()));
+        textView.setTextColor(StyleManager.getTextColorPrimary(getContext()));
+        textView.setTextSize(32);
         textView.setId(id);
         textView.setPadding(5,5,5,5);
-        textView.setBackgroundResource(R.color.Blue);
 
         textView.setLayoutParams(params);
         parent.addView(textView);
@@ -135,27 +175,39 @@ public class SelectFragment extends Fragment implements View.OnClickListener {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(REL_MATCH,
                 REL_WRAP);
         params.addRule(RelativeLayout.BELOW, below);
+        params.setMargins(getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin), getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin),
+                getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin), getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin));
         ImageButton button = new ImageButton(getActivity());
         button.setId(id);
         button.setImageResource(background);
-        button.setBackgroundResource(R.color.White);
+        button.setBackgroundResource(StyleManager.getwindowBackColor(getContext()));
+        button.setLayoutParams(params);
+        button.setOnClickListener(this);
+
+        ShapeDrawable shapedrawable = new ShapeDrawable();
+        shapedrawable.setShape(new RectShape());
+        shapedrawable.getPaint().setColor(StyleManager.getPrimaryColor(getContext()));
+        shapedrawable.getPaint().setStrokeWidth(10f);
+        shapedrawable.getPaint().setStyle(Paint.Style.STROKE);
+        button.setBackground(shapedrawable);
+
+        parent.addView(button);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void createButtonwithShapeBelow(RelativeLayout parent, int id, int below){
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(REL_WRAP,
+                REL_WRAP);
+        params.addRule(RelativeLayout.BELOW, below);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        Button button = new Button(getActivity());
+        button.setId(id);
+        button.setText(getResources().getString(R.string.cancelar).toUpperCase());
+        button.setBackgroundResource(R.drawable.buttonshape);
         button.setLayoutParams(params);
         button.setOnClickListener(this);
         parent.addView(button);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void createButtonRightOf (RelativeLayout parent, int id, int background, int right){
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(REL_WRAP,
-                REL_WRAP);
-        params.addRule(RelativeLayout.RIGHT_OF, right);
-        params.addRule(RelativeLayout.ALIGN_BOTTOM, right);
-        ImageButton button = new ImageButton(getActivity());
-        button.setId(id);
-        button.setImageResource(background);
-        button.setBackgroundResource(R.color.White);
-        button.setLayoutParams(params);
-        button.setOnClickListener(this);
-        parent.addView(button);
-    }
 }

@@ -1,24 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:divider="?android:attr/dividerHorizontal"
-    android:orientation="horizontal"
-    android:showDividers="middle">
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="0dp"
+
+    android:fitsSystemWindows="true">
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
-    <FrameLayout
-        android:id="@+id/detail_fragment_container"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"/>
-    <FrameLayout
-        android:id="@+id/fragment_select"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:visibility="invisible"/>
-</LinearLayout>
+        android:id="@+id/linear_two_pane"
+        android:orientation="horizontal"
+        android:showDividers="middle">
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/detail_fragment_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+        </FrameLayout>
+    </LinearLayout>
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/floating_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_content_size"
+        android:layout_gravity="center_horizontal|start"
+        app:fab_labelStyle="@style/fabTags"
+        app:fab_addButtonColorNormal="?colorAccent"
+        app:fab_addButtonSize="normal"
+        app:fab_labelsPosition="left"
+        app:layout_anchor="@id/detail_fragment_container"
+        app:layout_anchorGravity="bottom">
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/new_4_round"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="?attr/colorAccent"
+            app:fab_icon="@drawable/tab_4_48dp"
+            app:fab_size="mini"
+            app:fab_title="4x4" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/new_6_round"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="?attr/colorAccent"
+            app:fab_icon="@drawable/tab_6_48dp"
+            app:fab_size="mini"
+            app:fab_title="6x6" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/new_8_round"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="?attr/colorAccent"
+            app:fab_icon="@drawable/tab_8_48dp"
+            app:fab_size="mini"
+            app:fab_title="8x8" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="themedMenuStoryDrawable" format="reference" />
+    <attr name="themedMenuCommentDrawable" format="reference" />
+    <attr name="mainBackground" format="reference" />
+    <attr name="list_fragment_en_curso_color" format="reference"/>
+    <attr name="list_fragment_finalizada_color" format="reference"/>
+    <attr name="roundtitlecolor" format="reference"/>
+    <attr name="top_color" format="reference"/>
+    <attr name="down_color" format="reference"/>
+</resources>

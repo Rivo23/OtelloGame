@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+        <PreferenceCategory android:title="@string/ajustes">
+            <ListPreference
+                android:defaultValue="3"
+                android:entries="@array/levelsArray"
+                android:entryValues="@array/levelsValues"
+                android:key="style"
+                android:summary="@string/style_sub"
+                android:title="@string/style_title" />
+            <CheckBoxPreference
+                android:key="music"
+                android:summary="@string/music_title"
+                android:title="Music"
+                android:icon="@drawable/add_green_48dp"
+                android:checked="true"/>
+            <CheckBoxPreference
+                android:key="turn"
+                android:summary="@string/afirmativo"
+                android:title="Primero en jugar"
+                android:icon="@drawable/tab_8_48dp"
+                android:checked="true"/>
+        </PreferenceCategory>
+    </PreferenceScreen>

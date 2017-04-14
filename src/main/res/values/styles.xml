@@ -1,11 +1,23 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Check hidroh.com. support multiples themes-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorSecondary">@color/Blue</item>
+        <item name="android:textColorPrimaryInverse">@color/Blue</item>
+        <item name="android:textColorSecondaryInverse">@color/Blue</item>
+        <item name="mainBackground">@color/Blue</item>
+        <item name="list_fragment_en_curso_color">@color/White</item>
+        <item name="list_fragment_finalizada_color">@color/White</item>
+        <item name="roundtitlecolor">@android:color/black</item>
+        <item name="top_color">@color/Red</item>
+        <item name="down_color">@color/Green</item>
     </style>
 
     <style name="ButtonGeneral">
@@ -15,4 +27,76 @@
         <item name="android:textSize">@dimen/buttonText</item>
     </style>
 
+    <style name="fabTags">
+        <item name="android:background">@drawable/fab_tag</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="OliveTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimaryInverseO</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkInverseO</item>
+        <item name="colorAccent">@color/colorAccentInverseO</item>
+        <item name="android:windowBackground">@color/colorPrimaryDarkInverseO</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryO</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryO</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverseO</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverseO</item>
+        <item name="mainBackground">@color/winbackO</item>
+        <item name="list_fragment_en_curso_color">@color/list_fragO</item>
+        <item name="list_fragment_finalizada_color">@color/list_fragFO</item>
+        <item name="roundtitlecolor">@color/roundtitleO</item>
+        <item name="top_color">@color/topO</item>
+        <item name="down_color">@color/downO</item>
+    </style>
+
+    <style name="MarineTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimaryInverseM</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkInverseM</item>
+        <item name="colorAccent">@color/colorAccentInverseM</item>
+        <item name="android:windowBackground">@color/colorPrimaryDarkInverseM</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryM</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryM</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverseM</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverseM</item>
+        <item name="mainBackground">@color/winbackM</item>
+        <item name="list_fragment_en_curso_color">@color/list_fragM</item>
+        <item name="list_fragment_finalizada_color">@color/list_fragFM</item>
+        <item name="roundtitlecolor">@color/roundtitleM</item>
+        <item name="top_color">@color/topM</item>
+        <item name="down_color">@color/downM</item>
+    </style>
+
+    <style name="ForestTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimaryInverseB</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkInverseB</item>
+        <item name="colorAccent">@color/colorAccentInverseB</item>
+        <item name="android:windowBackground">@color/colorPrimaryDarkInverseB</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryB</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryB</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverseB</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverseB</item>
+        <item name="mainBackground">@color/winbackB</item>
+        <item name="list_fragment_en_curso_color">@color/list_fragB</item>
+        <item name="list_fragment_finalizada_color">@color/list_fragFB</item>
+        <item name="roundtitlecolor">@color/roundtitleF</item>
+        <item name="top_color">@color/topF</item>
+        <item name="down_color">@color/downF</item>
+    </style>
+
+    <style name="OasisTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimaryInverseA</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkInverseA</item>
+        <item name="colorAccent">@color/colorAccentInverseA</item>
+        <item name="android:windowBackground">@color/colorPrimaryDarkInverseA</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryA</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryA</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverseA</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverseA</item>
+        <item name="mainBackground">@color/winbackA</item>
+        <item name="list_fragment_en_curso_color">@color/list_fragA</item>
+        <item name="list_fragment_finalizada_color">@color/list_fragFA</item>
+        <item name="roundtitlecolor">@color/roundtitleA</item>
+        <item name="top_color">@color/topA</item>
+        <item name="down_color">@color/downA</item>
+    </style>
 </resources>
